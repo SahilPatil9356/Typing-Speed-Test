@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <style>
+        body {
+            font-family: new indian roma;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 50px;
+        }
+        #test-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        #quote-display {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #quote-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="test-container">
+        <div id="quote-display">Click "Start" to begin!</div>
+        <textarea id="quote-input" rows="5" disabled></textarea>
+        <div id="result"></div>
+        <button onclick="startTest()">Start</button>
+    </div>
+
+    <script>
+        const quotes = [
+            "The quick brown fox jumps over the lazy dog.",
+            "Typing tests are a fun way to improve speed.",
+            "Practice makes perfect.",
+            "JavaScript adds interactivity to websites."
+        ];
+
+        let startTime, selectedQuote;
+
+        function startTest() {
+            selectedQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-display').innerText = selectedQuote;
+            document.getElementById('quote-input').value = "";
+            document.getElementById('quote-input').disabled = false;
+            document.getElementById('quote-input').focus();
+            document.getElementById('result').innerText = "";
+            startTime = new Date().getTime();
+        }
+
+        document.getElementById('quote-input').addEventListener('input', function() {
+            const inputText = this.value;
+            if (inputText === selectedQuote) {
+                const endTime = new Date().getTime();
+                const totalTime = (endTime - startTime) / 1000;
+                const words = selectedQuote.split(' ').length;
+                const speed = Math.round((words / totalTime) * 60);
+                document.getElementById('result').innerText = `Your typing speed is ${speed} WPM.`;
+                document.getElementById('quote-input').disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
